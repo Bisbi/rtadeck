@@ -1,0 +1,408 @@
+/* ===== PICO-8 Palette ===== */
+:root {
+  --bg: #000000;
+  --panel: #1D2B53;
+  --text: #FFF1E8;
+  --text-secondary: #C2C3C7;
+  --red: #FF004D;
+  --blue: #29ADFF;
+  --green: #00E436;
+  --orange: #FFA300;
+  --yellow: #FFEC27;
+  --pink: #FF77A8;
+  --purple: #7E2553;
+  --dark-purple: #5F574F;
+
+  --cols: 5;
+  --rows: 3;
+  --gap: 6px;
+  --tab-height: 48px;
+  --shadow: 4px;
+}
+
+/* ===== Reset & Base ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Silkscreen', 'Press Start 2P', cursive;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: pan-x;
+  user-select: none;
+}
+
+/* ===== Scanlines (optional overlay) ===== */
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0,0,0,0.08) 2px,
+    rgba(0,0,0,0.08) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* ===== App Layout ===== */
+#app {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100dvh;
+}
+
+/* ===== Grid ===== */
+#grid-container {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(var(--cols), 1fr);
+  grid-template-rows: repeat(var(--rows), 1fr);
+  gap: var(--gap);
+  padding: var(--gap);
+  min-height: 0;
+}
+
+/* ===== Button ===== */
+.deck-btn {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--panel);
+  border: 3px solid var(--text-secondary);
+  border-radius: 4px;
+  box-shadow: var(--shadow) var(--shadow) 0 rgba(0,0,0,0.5);
+  cursor: pointer;
+  transition: transform steps(1) 0.05s, box-shadow steps(1) 0.05s;
+  overflow: hidden;
+  gap: 2px;
+  padding: 4px;
+}
+
+.deck-btn:active, .deck-btn.pressing {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 rgba(0,0,0,0.5);
+}
+
+.deck-btn.empty {
+  background: rgba(29, 43, 83, 0.3);
+  border: 2px dashed rgba(255,241,232,0.15);
+  box-shadow: none;
+}
+
+.deck-btn.empty:hover {
+  border-color: rgba(255,241,232,0.3);
+}
+
+/* Button content */
+.btn-icon {
+  line-height: 1;
+}
+
+.btn-icon.size-S { font-size: clamp(16px, 3dvh, 24px); }
+.btn-icon.size-M { font-size: clamp(24px, 5dvh, 40px); }
+.btn-icon.size-L { font-size: clamp(32px, 7dvh, 56px); }
+
+.btn-label {
+  font-family: 'VT323', monospace;
+  font-size: clamp(10px, 1.5dvh, 14px);
+  color: var(--text-secondary);
+  text-align: center;
+  line-height: 1.1;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Flash feedback */
+.deck-btn.flash {
+  animation: flash-anim 0.3s steps(2);
+}
+
+@keyframes flash-anim {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(2); }
+}
+
+/* ===== Tab Bar ===== */
+#tab-bar {
+  display: flex;
+  height: var(--tab-height);
+  background: var(--panel);
+  border-top: 3px solid var(--dark-purple);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+#tab-bar::-webkit-scrollbar { display: none; }
+
+.tab-btn {
+  flex: 1;
+  min-width: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-family: 'Silkscreen', cursive;
+  font-size: clamp(10px, 1.5dvh, 14px);
+  cursor: pointer;
+  padding: 0 12px;
+  border-right: 2px solid rgba(255,241,232,0.1);
+  transition: color steps(1) 0.05s, background steps(1) 0.05s;
+}
+
+.tab-btn:last-child { border-right: none; }
+
+.tab-btn.active {
+  color: var(--yellow);
+  background: rgba(255,236,39,0.1);
+  border-bottom: 3px solid var(--yellow);
+}
+
+.tab-btn:active {
+  background: rgba(255,241,232,0.1);
+}
+
+.tab-icon {
+  font-size: 18px;
+}
+
+.tab-label {
+  font-family: 'VT323', monospace;
+  font-size: clamp(12px, 1.8dvh, 16px);
+}
+
+/* Fullscreen & settings buttons */
+.tab-btn.fullscreen-btn,
+.tab-btn.settings-btn {
+  flex: 0;
+  min-width: 48px;
+  max-width: 48px;
+  font-size: 18px;
+  color: var(--text-secondary);
+}
+
+/* ===== Editor Overlay ===== */
+#editor-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+#editor-overlay.hidden { display: none; }
+
+#editor-dialog {
+  width: 100%;
+  max-width: 500px;
+  max-height: 90dvh;
+  overflow-y: auto;
+  background: var(--panel) !important;
+}
+
+.editor-title {
+  font-family: 'Press Start 2P', cursive;
+  font-size: 14px;
+  color: var(--yellow);
+  margin-bottom: 16px;
+}
+
+.editor-row {
+  margin-bottom: 12px;
+}
+
+.editor-row label.nes-text {
+  display: block;
+  font-family: 'VT323', monospace;
+  font-size: 16px;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+.editor-inline {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.editor-inline label {
+  font-family: 'VT323', monospace;
+  font-size: 14px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.editor-buttons {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+/* Size picker */
+.size-picker .size-btn {
+  font-size: 10px !important;
+  padding: 4px 12px !important;
+  min-width: 40px;
+}
+
+/* NES.css overrides for dark theme */
+.nes-input.is-dark,
+.nes-select.is-dark select {
+  background: var(--bg) !important;
+  color: var(--text) !important;
+  font-family: 'VT323', monospace;
+  font-size: 16px;
+}
+
+.nes-container.is-dark {
+  border-color: var(--text-secondary);
+}
+
+/* Color inputs */
+input[type="color"] {
+  width: 40px;
+  height: 32px;
+  border: 2px solid var(--text-secondary);
+  background: var(--bg);
+  cursor: pointer;
+  padding: 2px;
+}
+
+hr {
+  border: none;
+  border-top: 2px dashed var(--dark-purple);
+  margin: 16px 0;
+}
+
+/* ===== Settings Overlay ===== */
+#settings-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+#settings-overlay.hidden { display: none; }
+
+#settings-dialog {
+  width: 100%;
+  max-width: 500px;
+  max-height: 90dvh;
+  overflow-y: auto;
+  background: var(--panel) !important;
+}
+
+.settings-section {
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 2px dashed var(--dark-purple);
+}
+
+.settings-section:last-of-type { border-bottom: none; }
+
+.settings-heading {
+  font-family: 'Silkscreen', cursive;
+  font-size: 12px;
+  color: var(--blue);
+  margin-bottom: 8px;
+}
+
+.settings-page-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(255,241,232,0.08);
+}
+
+.settings-page-icon { font-size: 18px; }
+
+.settings-page-name {
+  flex: 1;
+  font-family: 'VT323', monospace;
+  font-size: 16px;
+  color: var(--text);
+}
+
+.settings-page-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.settings-sm-btn {
+  font-size: 8px !important;
+  padding: 2px 6px !important;
+}
+
+.settings-full-btn {
+  width: 100%;
+  margin-top: 8px;
+  font-size: 10px !important;
+}
+
+.settings-num {
+  width: 70px !important;
+  text-align: center;
+}
+
+.settings-label {
+  font-family: 'VT323', monospace;
+  font-size: 14px;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.settings-hint {
+  font-family: 'VT323', monospace;
+  font-size: 12px;
+  color: var(--dark-purple);
+  margin-top: 4px;
+}
+
+.active-profile {
+  background: rgba(255,236,39,0.08);
+  border-left: 3px solid var(--yellow);
+  padding-left: 5px;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 600px) {
+  :root {
+    --gap: 4px;
+    --tab-height: 40px;
+    --shadow: 3px;
+  }
+}
+
+@media (orientation: portrait) {
+  :root {
+    --cols: 3;
+    --rows: 5;
+  }
+}
