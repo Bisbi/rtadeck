@@ -17,7 +17,8 @@
     "dev": "node bin/rtadeck.js serve --port 3000"
   },
   "keywords": [
-    "stream-deck", "streamdeck", "elgato-alternative", "macro-pad", "macro-keyboard",
+    "stream-deck", "streamdeck", "elgato-alternative", "free-stream-deck", "macro-pad", "macro-keyboard",
+    "phone-stream-deck", "smartphone-macro-pad", "wireless-stream-deck",
     "touch-screen", "smart-display", "dashboard", "control-panel",
     "keyboard-shortcuts", "hotkeys", "automation", "developer-tools",
     "ai-agent", "claude-code", "terminal-launcher",

@@ -1,27 +1,31 @@
 # rtaDeck
 
-**Rule Them All + Deck** — A retro 8-bit Stream Deck for touch screens, smartphones, and tablets.
+**Rule Them All + Deck** — Your free, open-source Stream Deck. Turn your smartphone into a wireless macro pad in 30 seconds.
+
+No hardware to buy. No subscriptions. Just run `npx rtadeck serve`, scan the QR code with your phone, and you have a fully customizable Stream Deck — for free.
 
 ![Node.js](https://img.shields.io/badge/Node.js-%3E%3D18-green)
 ![License](https://img.shields.io/badge/License-MIT-blue)
+![Price](https://img.shields.io/badge/Price-Free-brightgreen)
+![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20macOS%20%7C%20Linux-blue)
 
 ---
 
 ## The Story
 
-It started with a cheap 7" touch screen, an HDMI cable, and a question: *"What if I could build my own Stream Deck?"*
+I wanted a Stream Deck. Not the $150 Elgato kind — I just wanted to press buttons on a screen and make things happen on my computer.
 
-Not the $150 Elgato kind. Not a polished commercial product. Something **personal** — a command center that lives on my desk, launches my apps, fires off keyboard shortcuts, and most importantly, spawns AI coding agents across all my projects with a single tap.
+Then I realized: **everyone already owns a Stream Deck. It's the smartphone in your pocket.**
 
-I'm a developer. I have Claude Code running on three different machines, each with a dozen projects. I wanted one button to open a terminal in the right folder, with the right agent, ready to go. I wanted another button to toggle my microphone, another to open the docs I always need, and a page full of shortcuts I can never remember.
+So I built rtaDeck. One `npm install`, one command, and your phone turns into a fully customizable macro pad over Wi-Fi. Zero cost. Zero hardware. Scan a QR code and you're in.
 
-The commercial solutions didn't fit. Too rigid, too expensive, or too locked-in. So I built rtaDeck — in Node.js, with 6 dependencies, zero build steps, and a retro 8-bit aesthetic that makes me smile every time I look at it.
+But it didn't stop there. I had a cheap 7" touch screen collecting dust — now it's a permanent command center on my desk. I have Claude Code running on three different machines, each with a dozen projects. One tap spawns the right AI agent, in the right folder, in the right terminal. Another tap opens my docs. Another fires off the keyboard shortcut I can never remember.
 
-**The twist?** It's not just for the touch screen on your desk. Set `host: "0.0.0.0"` and your phone becomes a wireless Stream Deck too. Scan the QR code that appears in the terminal, and you're in. Same interface, same buttons, real-time sync.
+**Why pay $150+ for an Elgato when your phone can do the same thing — and more?** rtaDeck doesn't just press buttons. It launches programs, opens URLs, sends keyboard shortcuts, runs shell commands, and spawns AI coding agent terminals. It has multiple pages, profiles per machine, and a retro 8-bit aesthetic that makes it actually fun to use.
 
-It's a tool built by a developer, for developers. The config is a single JSON file — edit it by hand, let an AI agent modify it, or use the built-in touch editor. Your choice.
+The commercial solutions are rigid, expensive, and locked-in. rtaDeck is a single JSON file you can edit by hand, modify with an AI agent, or configure from the touch UI. It runs everywhere Node.js runs — Windows, macOS, Linux, Raspberry Pi.
 
-If you've ever wished you could have a custom control panel for your dev workflow — one that works exactly the way you think — this is it.
+**Your phone. Your old tablet. A $30 touch screen. Any of them becomes a free Stream Deck in 30 seconds.**
 
 ---
 
@@ -482,15 +486,15 @@ On Windows, programs launched via rtaDeck open on the **primary monitor** (not t
 
 ### Is rtaDeck a free alternative to Elgato Stream Deck?
 
-Yes. rtaDeck is an open-source, free alternative to the Elgato Stream Deck. It works with any touch screen (7", 10", tablets) or even your smartphone over Wi-Fi. No proprietary hardware required — just plug in a cheap HDMI touch display and run `npx rtadeck serve`.
+Yes. rtaDeck is a 100% free, open-source alternative to the Elgato Stream Deck. You don't need to buy any hardware — your smartphone already works as a Stream Deck over Wi-Fi. Just run `npx rtadeck serve` on your computer, scan the QR code with your phone, and you have a fully functional macro pad. If you want a dedicated screen, any cheap HDMI touch display ($30-50) works perfectly.
 
 ### Can I use rtaDeck with a Raspberry Pi?
 
 Absolutely. rtaDeck runs on any device with Node.js 18+. A Raspberry Pi with a touch screen makes a perfect dedicated Stream Deck. Install with `npm install -g rtadeck`, set `host: "0.0.0.0"` to access it from other devices, and you have a standalone control panel.
 
-### Can I use my phone as a Stream Deck?
+### Can I use my phone as a Stream Deck for free?
 
-Yes. Set `host: "0.0.0.0"` in your config, start the server, and scan the QR code printed in the terminal. Your phone connects instantly over Wi-Fi with full authentication. You can even install it as a PWA ("Add to Home Screen") for a native app experience.
+Yes — this is exactly what rtaDeck was built for. Your smartphone is a touch screen you already own. Set `host: "0.0.0.0"` in your config, start the server, and scan the QR code printed in the terminal. Your phone connects instantly over Wi-Fi with secure authentication. Install it as a PWA ("Add to Home Screen") and it looks and feels like a native app. No app store, no subscription, no cost.
 
 ### How do I launch AI agents (Claude Code, Cursor) with one button?
 
