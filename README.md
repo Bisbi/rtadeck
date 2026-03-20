@@ -478,6 +478,38 @@ On Windows, programs launched via rtaDeck open on the **primary monitor** (not t
 
 ---
 
+## FAQ
+
+### Is rtaDeck a free alternative to Elgato Stream Deck?
+
+Yes. rtaDeck is an open-source, free alternative to the Elgato Stream Deck. It works with any touch screen (7", 10", tablets) or even your smartphone over Wi-Fi. No proprietary hardware required — just plug in a cheap HDMI touch display and run `npx rtadeck serve`.
+
+### Can I use rtaDeck with a Raspberry Pi?
+
+Absolutely. rtaDeck runs on any device with Node.js 18+. A Raspberry Pi with a touch screen makes a perfect dedicated Stream Deck. Install with `npm install -g rtadeck`, set `host: "0.0.0.0"` to access it from other devices, and you have a standalone control panel.
+
+### Can I use my phone as a Stream Deck?
+
+Yes. Set `host: "0.0.0.0"` in your config, start the server, and scan the QR code printed in the terminal. Your phone connects instantly over Wi-Fi with full authentication. You can even install it as a PWA ("Add to Home Screen") for a native app experience.
+
+### How do I launch AI agents (Claude Code, Cursor) with one button?
+
+Use the `agent` action type. Configure a button with `"type": "agent"`, set `"target"` to the command (e.g., `"claude"`), `"cwd"` to your project folder, and `"args"` to your preferred terminal (`"wt"`, `"cmd"`, `"powershell"`). One tap opens a terminal in the right folder with your agent running.
+
+### Does rtaDeck work on Windows, macOS, and Linux?
+
+Yes. rtaDeck is fully cross-platform. Keyboard shortcuts use PowerShell on Windows, AppleScript on macOS, and xdotool on Linux. Program launching, URL opening, and terminal spawning all adapt to the OS automatically.
+
+### Can an AI agent modify rtaDeck's configuration?
+
+Yes. The config file (`rtadeck.config.json`) is a standard JSON file with a published schema. rtaDeck watches it for changes — any external edit (by an AI agent, a script, or a text editor) is instantly reflected in the UI. The CLI also provides `--json` output for machine-readable data.
+
+### How is rtaDeck different from other open-source Stream Decks?
+
+rtaDeck is purpose-built for developers: it has first-class support for launching AI coding agents, running CLI commands, sending keyboard shortcuts, and managing multiple profiles per machine. It's also the only one with a retro 8-bit NES aesthetic, zero build step (vanilla JS), and just 6 npm dependencies.
+
+---
+
 ## License
 
 MIT

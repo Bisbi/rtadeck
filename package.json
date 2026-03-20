@@ -1,7 +1,7 @@
 {
   "name": "rtadeck",
   "version": "0.1.0",
-  "description": "Retro 8-bit Stream Deck for touch screens and smartphones",
+  "description": "Retro 8-bit Stream Deck for touch screens and smartphones. Customizable macro pad with NES-style UI, keyboard shortcuts, CLI commands, AI agent terminals. Open source Elgato alternative.",
   "type": "module",
   "bin": {
     "rtadeck": "./bin/rtadeck.js"
@@ -16,7 +16,15 @@
     "start": "node bin/rtadeck.js serve",
     "dev": "node bin/rtadeck.js serve --port 3000"
   },
-  "keywords": ["stream-deck", "touch", "dashboard", "retro", "8-bit"],
+  "keywords": [
+    "stream-deck", "streamdeck", "elgato-alternative", "macro-pad", "macro-keyboard",
+    "touch-screen", "smart-display", "dashboard", "control-panel",
+    "keyboard-shortcuts", "hotkeys", "automation", "developer-tools",
+    "ai-agent", "claude-code", "terminal-launcher",
+    "retro", "8-bit", "nes-css", "pixel-art", "pico-8",
+    "pwa", "websocket", "express", "nodejs", "cross-platform",
+    "raspberry-pi", "kiosk", "remote-control", "lan"
+  ],
   "license": "MIT",
   "engines": {
     "node": ">=18"
